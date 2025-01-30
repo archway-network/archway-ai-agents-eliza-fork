@@ -1,0 +1,20 @@
+services:
+    eliza:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        stdin_open: true
+        tty: true
+        volumes:
+            - /var/run/tappd.sock:/var/run/tappd.sock
+            - eliza:/app/packages/client-twitter/src/tweetcache
+            - eliza:/app/db.sqlite
+        env_file: "agent.env"    
+        # Refer to: https://github.com/elizaOS/eliza/blob/develop/.env.example for all available environment variables
+        ports:
+            - "3000:3000"
+            - "5173:5173"
+        restart: always
+
+volumes:
+    eliza:
